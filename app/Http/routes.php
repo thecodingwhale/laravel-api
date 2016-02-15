@@ -1,31 +1,27 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+$api = app('Dingo\Api\Routing\Router');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ['middleware' => 'api.auth'],
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
+// Route::group(['as' => 'admin::'], function () {
+//     Route::get('dashboard', ['as' => 'dashboard', function () {
+//         // Route named "admin::dashboard"
+//     }]);
+// });
 
-Route::group(['middleware' => ['web']], function () {
-    //
+$api->version('v1', function ($api) {
+// Route::group(['prefix' => 'admin'], function () {
+//     Route::get('users', function ()    {
+//         // Matches The "/admin/users" URL
+//     });
+// });
+
+    $api->resource('user', 'App\LaravelApi\Api\V1\User\UserController@create');
+
+    // $api->post('authenticate', 'App\Http\Controllers\AuthenticateController@authenticate');
+    // $api->group(['middleware' => ['api.auth']], function ($api) {
+    //     $api->get('users/{id}', 'App\Http\Controllers\UserController@show');
+    // });
+
 });
